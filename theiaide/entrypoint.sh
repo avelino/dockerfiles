@@ -1,0 +1,1 @@
+yarn theia start /home/project --hostname=0.0.0.0
