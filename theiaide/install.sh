@@ -10,7 +10,7 @@ apt-get update && apt-get -y \
 #Required to use go get with git source
 apt-get update && apt-get install -y git
 
-export GO_VERSION=1.9.4
+export GO_VERSION=1.11.4
 export GOPATH=/usr/local/go-packages
 export GO_ROOT=/usr/local/go
 export PATH=$PATH:/usr/local/go/bin
