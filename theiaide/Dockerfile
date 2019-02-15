@@ -47,7 +47,6 @@ RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
   && ln -s /usr/local/bin/node /usr/local/bin/nodejs
 
 ENV YARN_VERSION 1.9.4
-
 RUN set -ex \
   && for key in \
   6A010C5166006599AA17F08146C2130DFD2497F5 \
@@ -73,26 +72,26 @@ RUN sh /root/install.sh
 ## User account
 RUN adduser --disabled-password --gecos '' theia && \
   adduser theia sudo && \
-  echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers;
-
-RUN chmod g+rw /home && \
+  echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers && \
+  chmod g+rw /home && \
   mkdir -p /home/project && \
   chown -R theia:theia /home/theia && \
   chown -R theia:theia /home/project;
 
 #Theia
-##Needed for node-gyp, nsfw build
-RUN apt-get update && apt-get install -y python build-essential
-
 USER theia
 WORKDIR /home/theia
 ARG VERSION=latest
 ADD $VERSION.package.json ./package.json
 ARG GITHUB_TOKEN
-RUN yarn --force --cache-folder ./ycache && rm -rf ./ycache
 # using "NODE_OPTIONS=..." to avoid out-of-memory problem in CI
-RUN NODE_OPTIONS="--max_old_space_size=4096" yarn theia build
+ENV NODE_OPTIONS "--max_old_space_size=4096"
+RUN yarn --force --cache-folder ./ycache && \
+    rm -rf ./ycache && \
+    yarn theia build
+
 EXPOSE 3000
+
 ENV SHELL /bin/bash
 
 ENTRYPOINT [ "yarn", "theia", "start", "/home/project", "--hostname=0.0.0.0" ]
