@@ -5,8 +5,9 @@ Various Dockerfiles I use on the desktop and on servers
 
 ### Theia IDE
 
-Images:
+Image base: **ubuntu:18.04**
 
+Images:
 - avelino/theia-ide - *Stable version*
 - avelino/theia-ide:next - *Developer version*
 
