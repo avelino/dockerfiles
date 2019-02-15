@@ -1,7 +1,9 @@
 FROM ubuntu:16.04
 
 #Common deps
-RUN apt-get update && apt-get -y install curl xz-utils wget
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get -y install curl xz-utils wget python build-essential
 
 #Install node and yarn
 #From: https://github.com/nodejs/docker-node/blob/6b8d86d6ad59e0d1e7a94cec2e909cad137a028f/8/Dockerfile
