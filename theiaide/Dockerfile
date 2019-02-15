@@ -20,15 +20,14 @@ RUN set -ex \
   56730D5401028683275BD23C23EFEFE93C4CFFFE \
   77984A986EBC2AA786BC0F66B01FBB92821C587A \
   ; do \
+  gpg --keyserver keyserver.ubuntu.com --recv-keys "$key" ; \
   gpg --keyserver pool.sks-keyservers.net --recv-keys "$key" || \
   gpg --keyserver pgp.mit.edu --recv-keys "$key" || \
   gpg --keyserver keyserver.pgp.com --recv-keys "$key" || \
   gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$key" ; \
   done
 
-
-ENV NODE_VERSION 8.12.0
-
+ENV NODE_VERSION 8.14.1
 RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
   && case "${dpkgArch##*-}" in \
   amd64) ARCH='x64';; \
