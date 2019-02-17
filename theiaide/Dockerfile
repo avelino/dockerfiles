@@ -5,7 +5,7 @@ ENV DEBIAN_FRONTEND noninteractive
 #Common deps
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get -y install curl xz-utils wget python build-essential
+    apt-get -y install curl xz-utils wget build-essential git sudo python python-dev vim-nox htop
 
 #Install node and yarn
 #From: https://github.com/nodejs/docker-node/blob/6b8d86d6ad59e0d1e7a94cec2e909cad137a028f/8/Dockerfile
@@ -78,10 +78,6 @@ RUN adduser --disabled-password --gecos '' theia && \
     mkdir -p /home/project && \
     chown -R theia:theia /home/theia && \
     chown -R theia:theia /home/project;
-
-#Developer tools
-RUN apt-get update &&
-    apt-get -y install git sudo python python-dev build-essential vim-nox htop
 
 ## Install all languages
 ADD ./install.sh /root/install.sh
