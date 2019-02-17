@@ -70,10 +70,6 @@ RUN set -ex && \
     && ln -s /opt/yarn/bin/yarn /usr/local/bin/yarnpkg \
     && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz
 
-## Install all languages
-ADD ./install.sh /root/install.sh
-RUN sh /root/install.sh
-
 ## User account
 RUN adduser --disabled-password --gecos '' theia && \
     adduser theia sudo && \
@@ -82,6 +78,14 @@ RUN adduser --disabled-password --gecos '' theia && \
     mkdir -p /home/project && \
     chown -R theia:theia /home/theia && \
     chown -R theia:theia /home/project;
+
+#Developer tools
+RUN apt-get update &&
+    apt-get -y install git sudo python python-dev build-essential vim-nox htop
+
+## Install all languages
+ADD ./install.sh /root/install.sh
+RUN sh /root/install.sh
 
 #Theia
 USER theia
